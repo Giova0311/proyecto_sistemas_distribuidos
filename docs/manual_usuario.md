@@ -195,13 +195,25 @@ esa opción elimina los volúmenes de datos.
 
 ## 12. Capturas del sistema
 
-Pendientes de incorporar: este manual no se considera terminado
-hasta añadir las siguientes capturas reales.
+## 12. Capturas del sistema
 
-| Archivo previsto en docs/capturas/ | Contenido                                  |
-| ---------------------------------- | ------------------------------------------ |
-| 01_inicio.png                      | Interfaz con formulario y listado          |
-| 02_pedido_creado.png               | Pedido de demostración y total calculado   |
-| 03_edicion_estado.png              | Formulario de edición y selector de estado |
+### Pantalla principal
 
-Usar datos ficticios. No mostrar contraseñas ni el contenido de .env.
+La pantalla reúne el formulario de registro, los filtros y el listado
+de pedidos.
+
+![Pantalla principal](capturas/cap_1.png.png)
+
+### Creación de un pedido
+
+Pedido de demostración con tres cuadernos a $5.000 por unidad,
+para un total de $15.000.
+
+![Pedido creado](capturas/cap_2.png.png)
+
+### Edición del estado
+
+Formulario de edición con el siguiente estado seleccionado,
+antes de guardar los cambios.
+
+![Edición del estado](capturas/cap_3.png.png)

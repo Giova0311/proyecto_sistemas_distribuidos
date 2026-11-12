@@ -43,9 +43,28 @@ No se ejecutaron pruebas del sistema como parte de este parche.
 
 Instrucciones de uso contrastadas con los componentes de la interfaz.
 La instalación en un equipo nuevo no se ha probado en este parche.
-Las capturas reales siguen pendientes.
 
 ### Aplicación
 
 Actualización documental.
 No requiere reconstruir imágenes ni reiniciar Docker.
+
+## Parche 03 — Evidencias visuales
+
+### Añadido
+
+- Tres capturas reales en docs/capturas/.
+- Imágenes y descripciones incorporadas al manual de usuario.
+
+### Validación
+
+Revisión visual de la pantalla inicial, la confirmación de creación
+del pedido #1 y el formulario de edición.
+El pedido mostrado contiene 3 unidades a $5.000: total $15.000.
+
+La captura de edición no demuestra un cambio de estado guardado.
+Estas evidencias no sustituyen las pruebas automatizadas ni de fallos.
+
+### Aplicación
+
+Actualización documental. No requiere reiniciar Docker.
