@@ -111,3 +111,18 @@ En las siguientes ejecuciones se desactiva la caché mediante
 
 Se añaden pruebas; no se modifica la lógica de la aplicación,
 el esquema de datos ni las variables de entorno.
+
+## Parche 05 — Informe de pruebas ejecutadas
+
+### Añadido
+
+- docs/informe_pruebas.md con procedimientos y resultados observados.
+- Registro de 9 casos unitarios aprobados.
+- Registro de 8 casos de integración aprobados.
+- Registro de 2 escenarios de detención y recuperación de backends.
+- Estado final de los servicios y límites de las comprobaciones.
+
+### Aplicación
+
+Actualización documental.
+No requiere reconstruir imágenes ni reiniciar Docker.

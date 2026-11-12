@@ -63,6 +63,7 @@ Las pruebas crean y eliminan sus propios pedidos.
 No deben ejecutarse a la vez que una demostración manual de fallos.
 
 Las pruebas automatizadas cubren:
+
 - Crear, consultar, actualizar y eliminar.
 - Validación de entradas.
 - Reintento con la misma clave sin crear un duplicado.
@@ -136,3 +137,10 @@ No publicar directamente en Internet sin añadir control de acceso,
 HTTPS, manejo de secretos y una estrategia de respaldo y recuperación.
 
 Consulta docs/arquitectura.md y docs/pruebas_fallos.md.
+
+## Documentación de entrega
+
+- [Manual técnico](docs/manual_tecnico.md)
+- [Manual de usuario y capturas](docs/manual_usuario.md)
+- [Informe de pruebas](docs/informe_pruebas.md)
+- [Registro de parches](CHANGELOG.md)
