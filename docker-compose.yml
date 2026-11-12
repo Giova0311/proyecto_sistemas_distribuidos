@@ -1,0 +1,128 @@
+name: sistema-pedidos
+
+x-backend-env: &backend-env
+  DB_HOST: mysql-primary
+  DB_PORT: "3306"
+  DB_NAME: pedidos
+  DB_USER: pedidos_app
+  DB_PASSWORD: ${DB_PASSWORD:?Configura DB_PASSWORD en .env}
+  REPLICA_READER_PASSWORD: ${REPLICA_READER_PASSWORD:?Configura .env}
+
+x-backend: &backend
+  build: ./backend
+  restart: unless-stopped
+  depends_on:
+    bootstrap:
+      condition: service_completed_successfully
+  healthcheck:
+    test:
+      - CMD
+      - python
+      - -c
+      - "import urllib.request; urllib.request.urlopen('http://localhost:8000/api/health/ready', timeout=4)"
+    interval: 10s
+    timeout: 5s
+    retries: 3
+    start_period: 15s
+
+services:
+  mysql-primary:
+    image: mysql:8.4
+    command:
+      - --server-id=1
+      - --log-bin=mysql-bin
+      - --binlog-format=ROW
+      - --gtid-mode=ON
+      - --enforce-gtid-consistency=ON
+      - --binlog-expire-logs-seconds=604800
+      - --sync-binlog=1
+      - --innodb-flush-log-at-trx-commit=1
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:?Configura .env}
+      MYSQL_ROOT_HOST: "%"
+      MYSQL_DATABASE: pedidos
+    volumes:
+      - primary-data:/var/lib/mysql
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - 'MYSQL_PWD="$$MYSQL_ROOT_PASSWORD" mysql -uroot -e "SELECT 1"'
+      interval: 5s
+      timeout: 5s
+      retries: 40
+
+  mysql-replica:
+    image: mysql:8.4
+    command:
+      - --server-id=2
+      - --log-bin=mysql-bin
+      - --relay-log=relay-bin
+      - --binlog-format=ROW
+      - --gtid-mode=ON
+      - --enforce-gtid-consistency=ON
+      - --log-replica-updates=ON
+      - --read-only=ON
+      - --relay-log-recovery=ON
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:?Configura .env}
+      MYSQL_ROOT_HOST: "%"
+    volumes:
+      - replica-data:/var/lib/mysql
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - 'MYSQL_PWD="$$MYSQL_ROOT_PASSWORD" mysql -uroot -e "SELECT 1"'
+      interval: 5s
+      timeout: 5s
+      retries: 40
+
+  bootstrap:
+    build: ./backend
+    restart: "no"
+    command: ["python", "bootstrap.py"]
+    environment:
+      <<: *backend-env
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:?Configura .env}
+      REPLICATION_PASSWORD: ${REPLICATION_PASSWORD:?Configura .env}
+    depends_on:
+      mysql-primary:
+        condition: service_healthy
+      mysql-replica:
+        condition: service_healthy
+
+  backend-1:
+    <<: *backend
+    environment:
+      <<: *backend-env
+      NODE_ID: backend-1
+
+  backend-2:
+    <<: *backend
+    environment:
+      <<: *backend-env
+      NODE_ID: backend-2
+
+  frontend:
+    build: ./frontend
+    restart: unless-stopped
+
+  nginx:
+    image: nginx:1.28-alpine
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:8080:80"
+    volumes:
+      - ./infra/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      backend-1:
+        condition: service_healthy
+      backend-2:
+        condition: service_healthy
+      frontend:
+        condition: service_started
+
+volumes:
+  primary-data:
+  replica-data:
