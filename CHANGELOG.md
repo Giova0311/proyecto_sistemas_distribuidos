@@ -68,3 +68,46 @@ Estas evidencias no sustituyen las pruebas automatizadas ni de fallos.
 ### Aplicación
 
 Actualización documental. No requiere reiniciar Docker.
+
+## Parche 04 — Pruebas unitarias de validación
+
+### Añadido
+
+- backend/tests/test_unitarios.py.
+- Nueve casos de validación de los datos de creación de pedidos.
+- Comprobación de normalización de textos y representación decimal.
+
+### Alcance
+
+Las pruebas instancian directamente el esquema PedidoCrear.
+No realizan solicitudes HTTP ni conexiones a MySQL.
+Complementan las pruebas de integración existentes.
+
+### Ejecución
+
+Desde la raíz del proyecto:
+
+docker compose build backend-1 backend-2
+docker compose run --rm --no-deps backend-1 python -m pytest -v tests/test_unitarios.py
+
+El segundo comando crea un contenedor temporal con la imagen actualizada.
+No inicia sus servicios dependientes y elimina el contenedor al terminar.
+
+### Resultado
+
+Ejecución realizada en Docker con Python 3.12.16 y pytest 8.3.5.
+
+- Casos ejecutados: 9.
+- Aprobados: 9.
+- Fallidos: 0.
+- Duración reportada: 0.63 segundos.
+- Avisos: 2, relacionados con permisos para escribir la caché de pytest.
+
+Los avisos no impidieron ejecutar las pruebas.
+En las siguientes ejecuciones se desactiva la caché mediante
+-p no:cacheprovider.
+
+### Aplicación
+
+Se añaden pruebas; no se modifica la lógica de la aplicación,
+el esquema de datos ni las variables de entorno.
