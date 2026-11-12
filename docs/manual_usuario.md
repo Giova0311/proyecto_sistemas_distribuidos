@@ -195,25 +195,25 @@ esa opción elimina los volúmenes de datos.
 
 ## 12. Capturas del sistema
 
-## 12. Capturas del sistema
-
 ### Pantalla principal
 
-La pantalla reúne el formulario de registro, los filtros y el listado
-de pedidos.
+Formulario de registro y listado vacío.
+El indicador superior muestra la API disponible mediante backend-1.
 
-![Pantalla principal](capturas/cap_1.png.png)
+![Pantalla principal](capturas/cap_1.png)
 
-### Creación de un pedido
+### Pedido registrado
 
-Pedido de demostración con tres cuadernos a $5.000 por unidad,
-para un total de $15.000.
+Confirmación del pedido #1 para «Papeleria la 6».
+Contiene tres cuadernos a $5.000 por unidad, para un total
+de $15.000 y estado Pendiente.
 
-![Pedido creado](capturas/cap_2.png.png)
+![Pedido registrado](capturas/cap_2.png)
 
-### Edición del estado
+### Formulario de edición
 
-Formulario de edición con el siguiente estado seleccionado,
-antes de guardar los cambios.
+El formulario muestra los datos del pedido, el selector de estado
+y los botones para guardar o cancelar la edición.
+En esta captura permanece seleccionado el estado Pendiente.
 
-![Edición del estado](capturas/cap_3.png.png)
+![Formulario de edición](capturas/cap_3.png)

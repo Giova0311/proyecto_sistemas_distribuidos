@@ -126,3 +126,17 @@ el esquema de datos ni las variables de entorno.
 
 Actualización documental.
 No requiere reconstruir imágenes ni reiniciar Docker.
+
+## Parche 06 — Corrección de documentación
+
+### Corregido
+
+- Enlaces de capturas con extensión duplicada.
+- Encabezado repetido en el manual de usuario.
+- Descripción de la captura de edición.
+- Instrucciones de creación de .env antes del primer arranque.
+- Comando de pruebas para usar la imagen actualizada sin caché de pytest.
+
+### Aplicación
+
+Cambios documentales. No requiere reconstruir imágenes ni reiniciar Docker.

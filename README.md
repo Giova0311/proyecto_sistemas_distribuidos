@@ -14,7 +14,21 @@ directamente en Windows para ejecutar el sistema mediante Docker.
 
 ## Inicio en PowerShell
 
-Desde la carpeta sistema-pedidos:
+Desde la carpeta raíz del proyecto, si todavía no existe .env:
+
+```powershell
+Copy-Item .env.example .env
+```
+
+Editar .env y sustituir las cuatro contraseñas de ejemplo.
+Usar letras, números, guion o guion bajo.
+
+- REPLICATION_PASSWORD: entre 16 y 32 caracteres.
+- Las otras contraseñas: entre 16 y 128 caracteres.
+
+Si el sistema ya funciona, conservar el archivo .env existente.
+
+Iniciar:
 
 ```powershell
 docker compose up --build -d
@@ -22,12 +36,9 @@ docker compose ps -a
 docker compose logs bootstrap
 ```
 
-El generador crea un .env con contraseñas aleatorias.
-Si falta, copia .env.example a .env y cambia las cuatro contraseñas.
-
-La primera construcción tarda varios minutos.
-El servicio bootstrap debe finalizar con código 0.
-Los dos backends deben aparecer saludables.
+La primera construcción puede tardar varios minutos.
+bootstrap debe finalizar con código 0.
+Los dos backends y ambas bases de datos deben aparecer saludables.
 
 - Aplicación: http://localhost:8080
 - Swagger: http://localhost:8080/api/docs
@@ -55,7 +66,8 @@ múltiples productos.
 Con todos los servicios funcionando:
 
 ```powershell
-docker compose exec backend-1 pytest -q tests
+docker compose build backend-1
+docker compose run --rm --no-deps backend-1 python -m pytest -v -p no:cacheprovider tests
 python scripts/probar_fallos.py
 ```
 
